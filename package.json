@@ -1,0 +1,8 @@
+{
+  "name": "currensee",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/sidshank/currensee",
+  "author": "Sid Shankar <sidshank@umich.edu>",
+  "license": "MIT"
+}
