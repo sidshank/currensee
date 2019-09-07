@@ -1,8 +1,16 @@
 {
   "name": "currensee",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/sidshank/currensee",
   "author": "Sid Shankar <sidshank@umich.edu>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node server"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1"
+  }
 }
