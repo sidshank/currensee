@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
 const CurrencyNoteSchema = mongoose.Schema({
-    frontImageId: {type: String, required: true},
-    backImageId: {type: String, required: true},
+    frontImageId: {type: mongoose.Schema.Types.ObjectId, required: true},
+    backImageId: mongoose.Schema.Types.ObjectId,
     amount: {type: Number, required: true},
     name: {type: String, required: true},
     country: {type: String, required: true},
