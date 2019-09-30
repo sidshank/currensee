@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const CurrencyNoteSchema = mongoose.Schema({
     frontImageId: mongoose.Schema.Types.ObjectId, // Mongoose Schema => Image
