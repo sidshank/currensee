@@ -2,7 +2,12 @@ import mongoose from 'mongoose';
 
 const CurrencySchema = mongoose.Schema({
     name: String,
-    country: mongoose.Schema.Types.ObjectId, // Mongoose Schema => Country
+    code: String,
+    symbol: String,
+
+    // Mongoose Schema => Array of Country, since a currency might be used
+    // in multiple countries.
+    country: [mongoose.Schema.Types.ObjectId],
 });
 
 const Currency = mongoose.model('Currency', CurrencySchema);
