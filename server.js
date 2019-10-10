@@ -1,13 +1,17 @@
 require('dotenv').config();
 require('./server/db-conn');
+const bluebird = require('bluebird')
 const bodyParser = require('body-parser')
 const express = require('express')
-const sentry = require('@sentry/node');
+const mongoose = require('mongoose')
+const sentry = require('@sentry/node')
 
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use('/api/currency/', require('./server/routes/currency-routes'))
+
+mongoose.Promise = bluebird
 
 app.get('/', (req, res) => {
     res.sendFile('index.html', {root: __dirname})
