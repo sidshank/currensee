@@ -7,7 +7,7 @@ const CurrencySchema = mongoose.Schema({
 
     // Mongoose Schema => Array of Country, since a currency might be used
     // in multiple countries.
-    country: [mongoose.Schema.Types.ObjectId],
+    countries: [mongoose.Schema.Types.ObjectId],
 });
 
 const Currency = mongoose.model('Currency', CurrencySchema);
