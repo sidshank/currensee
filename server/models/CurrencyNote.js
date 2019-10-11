@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const CurrencyNoteSchema = mongoose.Schema({
     frontImageId: mongoose.Schema.Types.ObjectId, // Mongoose Schema => Image
     backImageId: mongoose.Schema.Types.ObjectId, // Mongoose Schema => Image
-    countryId: mongoose.Schema.Types.ObjectId, // Mongoose Schema => Currency
+    currencyId: mongoose.Schema.Types.ObjectId, // Mongoose Schema => Currency
     amount: {type: Number, required: true},
     condition: String,
 });
