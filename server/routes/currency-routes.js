@@ -27,28 +27,6 @@ const getCountry = countryName => {
     return Country.findOne({name: countryName}).exec()
 }
 
-const createCurrency = async (currencyInfo, countryObjectId) => {
-    let currencyObject = await Currency.find({name: currencyInfo.name}).exec()
-    if (!currencyObject) {
-        currencyDetails.countries = [countryObjectId]
-        currencyObject = new Currency(currencyDetails)
-    } else {
-        currencyObject.countries.push(countryObjectId)
-    }
-    try {
-        await currencyObject.save()
-        sentry.captureMessage(`Saved currency ${currencyDetails.name}`)
-    } catch (saveException) {
-        sentry.captureException(saveException)
-    }
-}
-
-const persistCurrencies = (currencies, countryObjectId) => {
-    currencies.forEach(crncy => {
-        createCurrency(crncy, countryObjectId)
-    })
-}
-
 const seedHandler = async (req, res, next) => {
     try {
         const requestOptions = {
@@ -56,11 +34,35 @@ const seedHandler = async (req, res, next) => {
             json: true,
         }
         const resp = await request(requestOptions)
-        resp.forEach(async rawCountry => {
-            const countryObject = await getCountry(rawCountry.name)
+        let allCurrencies = {}
+        for (let i = 0; i < resp.length; i++) {
+            const rawCountry = resp[i]
             // persistCountryObject(rawCountry)
-            persistCurrencies(rawCountry.currencies, countryObject._id)
-        });
+            const countryObject = await getCountry(rawCountry.name)
+            const currencies = rawCountry.currencies;
+            currencies.forEach(curr => {
+                if (curr.name === null || curr.code === '(none)' || curr.code === null) {
+                    // do nothing
+                } else if (allCurrencies[curr.code] === undefined) {
+                    curr.countries = [countryObject._id]
+                    allCurrencies[curr.code] = curr;
+                } else if(allCurrencies[curr.code].countries.indexOf(countryObject._id) === -1) {
+                    allCurrencies[curr.code].countries.push(countryObject._id)
+                }
+            })
+        }
+        for (let key in allCurrencies) {
+            const currencyInfo = allCurrencies[key]
+            const currencyObject = new Currency(currencyInfo)
+            currencyObject.save(err => {
+                if (err) {
+                    console.log("error occurred when saving currency")
+                    sentry.captureException(err)
+                } else {
+                    sentry.captureMessage(`Saved currency ${currencyInfo.name}`)
+                }
+            })
+        }
         res.send(resp)
     } catch (ex) {
         sentry.captureException(ex)
