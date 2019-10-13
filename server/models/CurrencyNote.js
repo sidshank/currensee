@@ -6,6 +6,8 @@ const CurrencyNoteSchema = mongoose.Schema({
     currencyId: mongoose.Schema.Types.ObjectId, // Mongoose Schema => Currency
     amount: {type: Number, required: true},
     condition: String,
+    serialNumber: String,
+    yearOfIssue: String
 });
 
 const CurrencyNote = mongoose.model('CurrencyNote', CurrencyNoteSchema);
