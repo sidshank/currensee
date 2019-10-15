@@ -9,8 +9,9 @@ const sentry = require('@sentry/node')
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
-app.use('/api/countries/', require('./server/routes/country-routes'))
-app.use('/api/currencies/', require('./server/routes/currency-routes'))
+app.use('/countries/', require('./server/routes/country-routes'))
+app.use('/currencies/', require('./server/routes/currency-routes'))
+app.use('/application/', require('./server/routes/application-routes'))
 
 mongoose.Promise = bluebird
 
