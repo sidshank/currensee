@@ -13,7 +13,7 @@ function App(/*props*/) {
     <div className="App container">
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand>
-          <Link to="/">Scratch</Link>
+          <Link to="/">Currensee</Link>
         </Navbar.Brand>
         <Nav className="mr-auto">
           <LinkContainer to="/">
